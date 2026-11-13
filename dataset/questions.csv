@@ -1,0 +1,201 @@
+ID,Category,Question,Expected Answer
+1,Complaint,How can I register a complaint?,"Click Register Complaint on your dashboard, select the category, enter your details and location, then submit."
+2,Complaint,Where can I report a broken street lamp?,"Go to Register Complaint, choose Street Lights category, describe the issue and submit."
+3,Complaint,There is a pothole near my house. What should I do?,"Navigate to Register Complaint, select Road Damage, provide your street address, and optionally attach a photo."
+4,Complaint,How can I report road damage?,"Select Register Complaint -> Road Damage, fill in the location description, and click submit."
+5,Complaint,Street light is not working. How do I report it?,"Select Register Complaint on dashboard, pick Street Lights, specify pole location, and submit."
+6,Complaint,There is no drinking water supply in our ward.,"Select Register Complaint -> Drinking Water, mention your ward number and submit."
+7,Complaint,Water pipe is leaking on North Street.,Lodge a complaint under Drinking Water category with North Street as the landmark.
+8,Complaint,Low water pressure for the past three days.,"Go to Register Complaint, choose Drinking Water, describe the pressure drop and submit."
+9,Complaint,Contaminated or dirty water coming from public tap.,Select Register Complaint -> Drinking Water and report contaminated supply for urgent action.
+10,Complaint,The water motor in our street is burnt out.,Register under Drinking Water mentioning overhead tank motor failure.
+11,Complaint,Streetlights are on during daytime but off at night.,Submit a grievance under Street Lights with pole timing fault details.
+12,Complaint,The electric pole near school is leaning dangerously.,Report under Street Lights or Electricity marking urgent danger near school.
+13,Complaint,Frequent power cuts and voltage fluctuations in our village.,Choose Register Complaint -> Electricity and enter your area details.
+14,Complaint,Open electric wires hanging loose across the road.,File an urgent complaint under Electricity category with exact location.
+15,Complaint,Garbage has not been collected for a week.,"Select Register Complaint -> Sanitation, provide street name for waste cleanup."
+16,Complaint,The public dustbin is overflowing and creating foul smell.,Go to Register Complaint -> Sanitation to report overflowing community bin.
+17,Complaint,Drainage water is overflowing onto main road.,Select Register Complaint -> Drainage and enter street landmark.
+18,Complaint,Underground drainage is completely blocked.,Report under Drainage category describing sewage blockage.
+19,Complaint,Stagnant drain water causing heavy mosquito breeding.,Lodge a complaint under Drainage requesting disinfection and declogging.
+20,Complaint,Dead animal carcass lying on the corner street.,Select Register Complaint -> Sanitation for immediate carcass clearance.
+21,Complaint,Tar road washed away after heavy rain.,Submit under Road Damage requesting emergency road patch work.
+22,Complaint,Muddy street makes it impossible for vehicles to pass.,Report under Road Damage with street name and photos.
+23,Complaint,Speed breaker required near primary school.,Select Register Complaint -> Road Damage requesting speed calming measures.
+24,Complaint,Footpath slabs are broken and dangerous.,Go to Register Complaint -> Road Damage describing sidewalk condition.
+25,Complaint,Construction debris dumped illegally on roadside.,Choose Register Complaint -> Sanitation with location details.
+26,Complaint,Can I upload a photo of the damaged drainage?,"Yes, you can attach PDF, JPG, or PNG files up to 5MB during complaint submission."
+27,Complaint,What file formats are allowed for complaint attachments?,"Allowed file formats are PDF, PNG, JPG, and JPEG up to 5MB."
+28,Complaint,Is there a size limit for complaint photo upload?,"Yes, the maximum allowable file size is 5MB."
+29,Complaint,Do I have to pay any fee to register a village grievance?,"No, registering public grievances on this portal is completely free of charge."
+30,Complaint,Who will resolve my water supply complaint?,The Village Panchayat administrative officer and maintenance technicians handle grievances.
+31,Complaint,How long does the Panchayat take to replace street bulb?,Routine streetlight repairs are usually attended within 24 to 48 working hours.
+32,Complaint,Can I submit a complaint on behalf of my neighbor?,"Yes, you can register grievances for any village utility issue using your account."
+33,Complaint,Can I file a complaint without logging in?,"No, citizen login is required so you can track resolution progress on your dashboard."
+34,Complaint,Can I file multiple complaints from same user account?,"Yes, there is no limit on the number of legitimate grievances you can register."
+35,Complaint,How do I cancel a complaint filed by mistake?,Contact your Village Administrative Officer or post remarks on the tracking page.
+36,Complaint,What if my complaint category is not listed?,Choose Sanitation or specify your issue clearly in the complaint description box.
+37,Complaint,Can I complain about illegal tree cutting?,"Yes, register under Sanitation/Other providing specific village plot details."
+38,Complaint,Public toilet maintenance is very poor.,File a grievance under Sanitation category with public toilet location.
+39,Complaint,Can I report encroachments on public village pathway?,"Yes, submit under Road Damage detailing unauthorized obstruction."
+40,Complaint,Stray dog menace near the community center.,Submit under Sanitation requesting Panchayat veterinary assistance.
+41,Complaint,Septic tank waste being discharged into open field.,File an urgent complaint under Sanitation and Drainage categories.
+42,Complaint,Hand pump handle is broken.,Report under Drinking Water specifying hand pump landmark.
+43,Complaint,Overhead water tank has not been cleaned this month.,Register a request under Drinking Water for water tank desiltation.
+44,Complaint,Street name board is damaged and missing.,Submit under Road Damage describing the intersection.
+45,Complaint,High voltage damaged household electrical appliances.,File under Electricity providing transformer and street details.
+46,Complaint,Can I register a complaint via voice without typing?,"Yes, click the microphone button in the AI Assistant to dictate your issue."
+47,Complaint,How do I know if the village officer saw my complaint?,Check Track Status; status changes from Pending to In Progress upon review.
+48,Complaint,What to do if my complaint was closed without resolution?,You can re-register the issue or contact the Panchayat Admin referencing the old ID.
+49,Complaint,Where does the complaint go after submission?,It is forwarded directly to the Admin Dashboard for Village Officer review.
+50,Complaint,Can I edit complaint description after submitting?,"Submitted complaints cannot be edited directly, but admins can append notes."
+51,Tracking,How can I track my complaint?,"Go to Track Status on the dashboard, enter your Complaint ID (e.g., CMP1001), and click search."
+52,Tracking,Where do I enter my Complaint ID?,Enter it in the search box inside the Track Status page.
+53,Tracking,What does Pending status mean?,It means your request has been recorded and is awaiting administrative inspection.
+54,Tracking,What does In Progress status mean?,It means the Panchayat officer has assigned field workers to rectify the issue.
+55,Tracking,What does Resolved status mean?,It means the repair work or service action has been successfully completed.
+56,Tracking,I forgot my Complaint ID. How can I find it?,Log in and look at the grievances table on your User Dashboard; all IDs are listed there.
+57,Tracking,Where is the Track Status button located?,It is available in the dashboard grid cards and the left sidebar navigation.
+58,Tracking,Can I see remarks added by the Panchayat Officer?,"Yes, administrative remarks are displayed in your tracking summary."
+59,Tracking,Why is my complaint still showing Pending after 5 days?,High workload or procurement delays may occur; contact the Panchayat office with your ID.
+60,Tracking,Will I get an email when my complaint status changes?,"Yes, the portal dispatches automated email updates whenever status changes."
+61,Tracking,Does status update in real time?,"Yes, as soon as the administrator updates the record in their panel, it updates live."
+62,Tracking,Can I track complaints registered last month?,"Yes, past complaints remain in database history under your User Dashboard."
+63,Tracking,My tracking ID shows No record found. Why?,"Verify the ID format (e.g., CMP1001 without spaces or extra symbols)."
+64,Tracking,Can an admin reject my grievance?,"Yes, grievances with incorrect details or false reports may be marked Rejected."
+65,Tracking,Where can I see all my past registered complaints together?,They are displayed in the complaints table right on your Citizen Dashboard.
+66,Tracking,Can I reopen a closed complaint?,"You cannot edit closed entries, but you can lodge a new reference complaint."
+67,Tracking,Does the tracking page show the officer contact details?,It displays the issuing Village Panchayat administrative office credentials.
+68,Tracking,Can I check complaint status without logging in?,"Login is recommended, but you can access Complaint Tracking with your unique ID."
+69,Tracking,How many digits are there in a Complaint ID?,"It typically starts with CMP followed by 4 digits, such as CMP1001."
+70,Tracking,Can I track status using my mobile number?,Direct search uses Complaint ID; check your dashboard to view by mobile account.
+71,Tracking,Will I receive an SMS when issue is resolved?,Currently notifications are dispatched via registered email and dashboard alerts.
+72,Tracking,How do I print the complaint acknowledgement slip?,You can print your browser tracking screen or dashboard table entry.
+73,Tracking,Why was my grievance rejected?,Check the tracking remarks column for specific administrative rejection reasons.
+74,Tracking,Can the admin attach proof of resolved work?,"Yes, admins can post completion notes and inspection updates."
+75,Tracking,Does tracking show date and time of submission?,"Yes, submission timestamps are recorded in the MySQL database and shown on dashboard."
+76,Tracking,Can anyone else see my complaint details?,Only people with your unique Complaint ID or village administrators can view it.
+77,Tracking,What is the difference between Pending and In Progress?,Pending means unassigned; In Progress means work has begun on site.
+78,Tracking,How do I escalate an unresolved complaint?,Visit the Panchayat office in person with your generated Complaint ID.
+79,Tracking,Where can I view admin final remarks?,On the Track Status result card under the remarks field.
+80,Tracking,How often should I check my complaint status?,Status updates occur as fieldwork progresses; checking every 24-48 hours is ideal.
+81,Birth Certificate,How can I apply for a birth certificate?,"Click Birth Certificate on dashboard, fill in applicant, child, and parents details, upload proof and submit."
+82,Birth Certificate,Where can I request a birth certificate on this portal?,Use the Birth Certificate card on your dashboard or the left sidebar menu.
+83,Birth Certificate,What documents are required for a birth certificate?,"Hospital birth discharge summary/slip, parents Aadhaar or Voter ID proof."
+84,Birth Certificate,How do I submit the application?,Fill out the 4-part form and click the Submit Application button at the bottom.
+85,Birth Certificate,Can I track my birth certificate request?,"Yes, track your Request ID (e.g., BC1001) in your dashboard applications table."
+86,Birth Certificate,I need a birth certificate for my newborn child. Where do I start?,Click Birth Certificate from dashboard and enter the child birth details.
+87,Birth Certificate,What information is needed about the parents?,"Father name, Mother name, and their official ID proof numbers."
+88,Birth Certificate,Is hospital discharge summary mandatory?,"Yes, hospital proof or doctor birth slip is required for verification."
+89,Birth Certificate,What if child was born at home?,Upload an affidavit or village health nurse declaration slip in document section.
+90,Birth Certificate,Can I apply without naming the child yet?,You can enter Baby of [Mother Name] temporarily if name is not finalized.
+91,Birth Certificate,How many days after birth should I apply?,Standard institutional births should be registered within 21 days.
+92,Birth Certificate,Is Aadhaar required for both parents?,"Aadhaar or any recognized government photo ID (Voter ID, Ration Card) is accepted."
+93,Birth Certificate,What is the maximum file size for hospital proof?,"Uploaded files must be under 5MB in PDF, JPG, or PNG format."
+94,Birth Certificate,How will I receive the approved birth certificate?,Download the verified PDF directly from your dashboard once status is Approved.
+95,Birth Certificate,Can I download birth certificate as PDF directly?,"Yes, click Download PDF in your applications table after admin approval."
+96,Birth Certificate,Is the downloaded PDF legally valid?,"Yes, it is generated with official Panchayat formatting and reference IDs."
+97,Birth Certificate,How long does Panchayat take to verify birth requests?,Typically 2 to 5 business days after cross-verifying hospital registries.
+98,Birth Certificate,What if there is spelling mistake in father name?,Contact the Panchayat administrator before approval or submit correction request.
+99,Birth Certificate,Can grandparents apply for child certificate?,"Yes, specify relationship as Grandfather/Grandmother in applicant details."
+100,Birth Certificate,What is a Request ID for birth certificate?,"It is a unique tracking code prefixed with BC (e.g., BC1001)."
+101,Birth Certificate,How do I check approval status of birth certificate?,View the My Certificate Applications table on your User Dashboard.
+102,Birth Certificate,What happens if admin rejects birth certificate?,Status will show Rejected; check email or admin note for missing documents.
+103,Birth Certificate,Can I edit child details after submitting?,"No, to maintain statutory records, updates require administrative intervention."
+104,Birth Certificate,Does the portal issue certificates for births outside village?,Only births occurring within this Village Panchayat jurisdiction can be approved.
+105,Birth Certificate,Can I download multiple copies of the birth PDF?,"Yes, you can re-download the generated PDF anytime from your account."
+106,Birth Certificate,Is there a fee for birth certificate application?,Initial registration within statutory period on this portal is free.
+107,Birth Certificate,Can I apply if birth occurred two years ago?,Delayed registrations require special Panchayat Revenue Officer sanction proof.
+108,Birth Certificate,What proof is accepted if I do not have Aadhaar?,"Voter ID, Driving License, or Family Ration Card is accepted."
+109,Birth Certificate,Does birth certificate include time of birth?,"Yes, the form captures exact time of birth for official registry."
+110,Birth Certificate,Who approves the birth certificate?,The authorized Village Administrative Officer or Panchayat Secretary.
+111,Death Certificate,How can I apply for a death certificate?,"Click Death Certificate on dashboard, enter deceased details and cause, upload hospital proof, and submit."
+112,Death Certificate,What documents are needed for a death certificate?,"Hospital death declaration/summary, deceased ID card, and applicant ID proof."
+113,Death Certificate,How do I submit a death certificate request?,Complete the 4-section death registration form and click submit to obtain a DC Request ID.
+114,Death Certificate,How can I check my death request status?,Monitor status in My Certificate Applications on your Citizen Dashboard.
+115,Death Certificate,Who is eligible to apply for death certificate?,"Immediate family members, spouses, direct relatives, or legal heirs."
+116,Death Certificate,Is doctor death declaration slip compulsory?,"Yes, medical certificate or village cremation report is required."
+117,Death Certificate,What details of deceased must be entered?,"Full name, gender, age, date of death, time, place of death, and permanent address."
+118,Death Certificate,What if death occurred at home due to old age?,Submit village head / doctor confirmation slip and cremation yard receipt.
+119,Death Certificate,What relationship proof must applicant upload?,Applicant identity card showing relation or family ration card.
+120,Death Certificate,How will I get death certificate PDF after approval?,Click the green Download PDF button next to your approved request on dashboard.
+121,Death Certificate,Can I download official death certificate from dashboard?,"Yes, downloadable PDF unlocks immediately upon Admin approval."
+122,Death Certificate,What is format of Death Certificate Request ID?,"It is prefixed with DC followed by numbers, such as DC1001."
+123,Death Certificate,Can I apply if cremation occurred in another village?,Registration must occur where demise happened; upload transit and hospital slips.
+124,Death Certificate,Is burial ground receipt required?,"Yes, burial or cremation confirmation is accepted as primary proof."
+125,Death Certificate,What if deceased exact age is not known?,Provide age mentioned on Aadhaar or Voter ID proof.
+126,Death Certificate,Can daughter apply for father death certificate?,"Yes, select Daughter under relationship with deceased."
+127,Death Certificate,How many days does village officer take to verify?,Usually takes 3 to 7 working days following record examination.
+128,Death Certificate,What should I do if death date entered was incorrect?,Meet the Village Officer immediately with hospital discharge paper for correction.
+129,Death Certificate,Why was my death certificate application rejected?,Rejections usually occur due to blurred documents or mismatched names.
+130,Death Certificate,Can I track death certificate by deceased name?,You can search by Request ID in dashboard or check your applications list.
+131,Death Certificate,Is post-mortem report required for accidental death?,"Yes, unnatural or accidental deaths require hospital post-mortem report copy."
+132,Death Certificate,Can I collect a physical hard copy from Panchayat?,"Yes, you can take your downloaded PDF to Panchayat office for official stamp."
+133,Death Certificate,What is delivery method option in form?,It lets you choose digital PDF download or postal/physical collection.
+134,Death Certificate,Is there an expiry date for death certificate?,"No, vital event certificates do not expire."
+135,Death Certificate,Can I apply without applicant ID proof?,"No, applicant government ID is mandatory to prevent fraudulent claims."
+136,Death Certificate,Can I re-apply if rejected for missing documents?,"Yes, submit a fresh application with complete legible attachments."
+137,Death Certificate,Does certificate state cause of death?,"Yes, primary medical cause of death is recorded in the registry."
+138,Death Certificate,Does certificate display permanent address?,"Yes, permanent village address is printed on the official PDF."
+139,Death Certificate,Is PDF document tamper-proof?,"Yes, generated via ReportLab with system reference keys and date stamps."
+140,Death Certificate,How to verify authenticity of generated certificate?,Cross-check Request ID against the Panchayat Master Database.
+141,General,What services are available on this Smart Village portal?,"Birth/Death certificate applications, public grievance registration, tracking, and AI assistance."
+142,General,How do I register a new citizen account?,"Click Register Here on login page, fill username, email, and password, then click Register."
+143,General,How do I log in to the portal?,"Open Login page, select Citizen tab, enter username and password, then submit."
+144,General,I forgot my password. How can I reset it?,Contact system administrator or request password re-hash through admin support.
+145,General,What is the difference between Citizen and Admin login?,Citizens submit and track requests; Admins verify records and approve certificates.
+146,General,How do I switch language between English and Tamil?,Click English or தமிழ் at top right corner of any page.
+147,General,Can I use this portal on mobile phone?,"Yes, the portal is fully mobile responsive and works on mobile web browsers."
+148,General,What are office working hours of Village Panchayat?,"Standard working hours are Monday to Friday, 10:00 AM to 5:45 PM."
+149,General,Who is our current Village Administrative Officer?,Please visit local Taluk office or check announcements on administrative board.
+150,General,Where is the Panchayat office located?,Usually situated in the central village administrative block near community hall.
+151,General,What is official contact number of Panchayat?,Check administrative notice section or contact local ward representative.
+152,General,Can I access welfare scheme details through this portal?,"Yes, you can ask the AI Assistant for welfare guidelines and procedures."
+153,General,Is my personal information safe on this portal?,"Yes, passwords are encrypted and data is stored securely in MySQL database."
+154,General,What should I do if website fails to load?,Refresh page with Ctrl+F5 or verify local server and database connectivity.
+155,General,Can I use the chatbot without registering?,Chatbot guidance is available for logged in citizens and guest home page users.
+156,General,Where can I find all my active requests at a glance?,All active requests are neatly summarized on your main User Dashboard.
+157,General,How do I log out securely after using portal?,Click Logout from left sidebar menu or top navigation header.
+158,General,Can admin register complaint on behalf of elderly citizen?,"Yes, village officers can assist citizens directly through the portal."
+159,General,Are certificates recognized by banks and passport offices?,"Yes, generated official certificates follow Tamil Nadu Panchayat Raj regulations."
+160,General,Is this portal available 24/7?,"Yes, online submissions and AI assistance can be accessed anytime 24/7."
+161,Tamil,"குடிநீர் வரவில்லை, எங்கே புகார் செய்வது?",டேஷ்போர்டில் உள்ள புகார் பதிவு (Register Complaint) சென்று Drinking Water பிரிவில் புகார் அளிக்கவும்.
+162,Tamil,தெரு விளக்கு பழுது பற்றி எப்படி பதிவு செய்வது?,முகப்பில் Register Complaint தேர்வு செய்து Street Lights பிரிவில் தெரு பெயர் கொடுத்து பதிவு செய்யவும்.
+163,Tamil,பிறப்பு சான்றிதழ் வாங்க என்ன ஆவணங்கள் தேவை?,மருத்துவமனை பிறப்பு உறுதி சீட்டு மற்றும் பெற்றோர் ஆதார் அடையாள அட்டை தேவை.
+164,Tamil,என் குழந்தையின் பிறப்பு சான்றிதழுக்கு எப்படி விண்ணப்பிப்பது?,Birth Certificate பகுதிக்கு சென்று குழந்தை மற்றும் பெற்றோர் விவரங்களை பூர்த்தி செய்து விண்ணப்பிக்கவும்.
+165,Tamil,இறப்பு சான்றிதழ் விண்ணப்ப நிலை எப்படி பார்ப்பது?,டேஷ்போர்டில் உள்ள My Certificate Applications அட்டவணையில் உங்கள் Request ID மூலம் நிலையை அறியலாம்.
+166,Tamil,சாக்கடை நீர் ரோட்டில் ஓடுகிறது என்ன செய்வது?,Register Complaint -> Drainage பிரிவில் உங்கள் தெருவின் விவரங்களை குறிப்பிட்டு புகார் செய்யவும்.
+167,Tamil,புகார் எண்ணை வைத்து நிலையை எப்படி அறிவது?,Track Status பகுதிக்கு சென்று உங்கள் புகார் எண் (CMP1001) உள்ளிட்டு சரிபார்க்கலாம்.
+168,Tamil,போர்ட்டலில் புதிய கணக்கு தொடங்குவது எப்படி?,"உள்நுழைவு பக்கத்தில் Register Here கிளிக் செய்து பெயர், மின்னஞ்சல், கடவுச்சொல் கொடுத்து பதிவு செய்யவும்."
+169,Tamil,அப்ரூவ் ஆன சர்டிபிகேட்டை எப்படி டவுன்லோட் செய்வது?,டேஷ்போர்டில் ஸ்டேட்டஸ் Approved ஆனதும் தோன்றும் பச்சை நிற Download PDF பட்டனை கிளிக் செய்யவும்.
+170,Tamil,பஞ்சாயத்து ஆபிஸ் எங்கே இருக்கிறது?,உங்கள் கிராம பஞ்சாயத்து தலைமை அலுவலகம் வழக்கமாக சமுதாய கூடம் அருகில் அமைந்திருக்கும்.
+171,Tanglish,Thanni varala enna panrathu?,Dashboard-la Register Complaint click panni Drinking Water category select panni submit pannunga.
+172,Tanglish,Street light eriyala complaint pannanum.,Register Complaint poi Street Lights select panni unga street details kudunga.
+173,Tanglish,Birth certificate apply panna enna proof venum?,Hospital discharge summary sheet and parents-oda Aadhaar card proof venum.
+174,Tanglish,En complaint status epdi check panrathu?,"Track Status page-la unga Complaint ID (e.g., CMP1001) pottu search pannunga."
+175,Tanglish,Road romba damage-ah irukku.,Register Complaint la Road Damage category choose panni pothole photos upload pannunga.
+176,Tanglish,Death certificate ethanai naalula kedaikkum?,"Officer verify panna 3 to 7 working days aagum, approve aana dashboard-la download pannalam."
+177,Tanglish,Drainage block aagirukku complaint register pannunga.,Register Complaint -> Drainage select panni street landmark kuduthu register pannunga.
+178,Tanglish,CMP1005 status enna aachu?,Track Status page-la CMP1005 nu search panni current progress and admin remarks paarunga.
+179,Tanglish,Tamil language epdi mathurathu?,Top navbar-la irukura தமிழ் link-ah click panni language change pannalam.
+180,Tanglish,Application approve aaiducha nu epdi theriyum?,"Unga registered email-ku message varum, plus dashboard-la status Approved nu maari PDF button varum."
+181,Voice,"Hello, I need some help with village service.","Hello! I can guide you to register complaints, apply for birth/death certificates, or track requests."
+182,Voice,The street pipe outside my gate burst this morning.,Please lodge a complaint under Drinking Water category with your street landmark immediately.
+183,Voice,Can you help me get certificate for child born yesterday?,"Yes, go to Birth Certificate section, fill hospital details, and submit for verification."
+184,Voice,Someone dumped trash near the temple.,"Select Register Complaint -> Sanitation, specify temple landmark, and submit for cleanup."
+185,Voice,"Hey assistant, check status for CMP1012.","Please open Track Status from sidebar, enter CMP1012, and view real-time updates."
+186,Voice,"My grandmother passed away last week, what steps should I take?",Submit a Death Certificate application with doctor declaration slip and identity proof.
+187,Voice,Why is nobody fixing the light on Main Bazaar street?,"Check Track Status with your Complaint ID; if delayed, escalate to the Panchayat administrator."
+188,Voice,I am unable to type. Can I just talk to you?,Yes! Click the microphone button anytime to speak your queries in Tamil or English.
+189,Voice,Tell me step-by-step how to fill birth form.,"1. Applicant details, 2. Child birth info, 3. Parents Aadhaar, 4. Upload hospital proof & submit."
+190,Voice,What do I do after submitting my complaint?,Note down your Complaint ID and monitor status updates on your dashboard.
+191,Voice,Can you show me where download button is?,Look at the Action column in My Certificate Applications on your Citizen Dashboard.
+192,Voice,Do I need to visit Panchayat office after applying online?,No physical visit needed unless officials require original record cross-verification.
+193,Voice,Electricity wire is sparking in the rain.,Report immediately under Electricity category and alert local TNEB/Panchayat linesman.
+194,Voice,Can you explain what documents I need to upload?,For complaints: photo proof; For certificates: hospital discharge slip and Aadhaar/Voter ID.
+195,Voice,I want to report dirty water before people get sick.,File under Drinking Water marking contaminated supply for priority health inspection.
+196,Voice,How do I get my birth certificate printed?,Download the verified PDF from your dashboard and print it on standard A4 paper.
+197,Voice,Where do I upload my Aadhaar card?,In the document upload section located in section 4 of the certificate forms.
+198,Voice,Are you an official government representative?,I am an automated AI Virtual Guide assisting you on this Smart Village Portal.
+199,Voice,Thanks for your help!,You are very welcome! Feel free to ask if you need anything else.
+200,Voice,Goodbye and close chat.,Goodbye! Click the top cross button anytime to minimize the assistant window.

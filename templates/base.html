@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="{{ lang or session.get('lang', 'en') }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Enabled Smart Village Service Portal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Marked.js for rendering AI Markdown responses into HTML -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f4f7f6;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* --- Left Sidebar Navigation --- */
+        .sidebar {
+            width: 250px;
+            background: #0b5345;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .sidebar-brand {
+            padding: 22px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            line-height: 1.3;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 20px 12px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: #e0f2f1;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .sidebar-menu a:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            transform: translateX(3px);
+        }
+
+        .sidebar-menu a.active {
+            background: #16a085;
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .sidebar-bottom {
+            padding: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .sidebar-logout {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            color: #ffcdd2;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .sidebar-logout:hover {
+            background: rgba(231, 76, 60, 0.2);
+            color: #ffffff;
+        }
+
+        /* --- Right Content Area --- */
+        .main-wrapper {
+            margin-left: 250px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            transition: margin-left 0.2s ease-in-out;
+        }
+
+        /* Full width layout when sidebar is hidden */
+        .main-wrapper.no-sidebar {
+            margin-left: 0 !important;
+            width: 100% !important;
+        }
+
+        /* Unified Header */
+        .top-navbar {
+            background: #0b5345;
+            color: #ffffff;
+            height: 65px;
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        .portal-brand-link {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .lang-switch {
+            color: #ffffff;
+            font-size: 14px;
+        }
+
+        .lang-switch a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 5px 12px;
+            font-size: 13px;
+            font-weight: bold;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .lang-switch a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .lang-switch a.active {
+            background: #ffffff;
+            color: #0b5345;
+        }
+
+        .page-content {
+            padding: 30px;
+            flex: 1;
+        }
+
+        /* Unified Footer */
+        .gov-footer {
+            background: #0b5345;
+            color: #e0f2f1;
+            padding: 16px 30px;
+            text-align: center;
+            font-size: 13px;
+            box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Chat Markdown styles */
+        .bot-msg-content p { margin: 4px 0; }
+        .bot-msg-content ul, .bot-msg-content ol { margin: 4px 0; padding-left: 20px; }
+        .bot-msg-content li { margin-bottom: 3px; }
+        .bot-msg-content strong { color: #0b5345; }
+        .bot-msg-content hr { border: 0; border-top: 1px solid #c8e6c9; margin: 6px 0; }
+    </style>
+</head>
+<body>
+
+    <!-- RENDER SIDEBAR ONLY ON CITIZEN DASHBOARD -->
+    {% if request.endpoint == 'dashboard' and session.get('username') %}
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            🏛️ {{ 'Smart Village' if (lang or session.get('lang', 'en')) == 'en' else 'கிராம சேவை' }}
+        </div>
+
+        <ul class="sidebar-menu">
+            <li>
+                <a href="{{ url_for('dashboard') }}" class="active">
+                    🏠 {{ 'Dashboard' if (lang or session.get('lang', 'en')) == 'en' else 'முகப்பு' }}
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('birth_certificate') }}">
+                    👶 {{ 'Birth Certificate' if (lang or session.get('lang', 'en')) == 'en' else 'பிறப்பு சான்றிதழ்' }}
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('death_certificate') }}">
+                    📜 {{ 'Death Certificate' if (lang or session.get('lang', 'en')) == 'en' else 'இறப்பு சான்றிதழ்' }}
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('complaint') }}">
+                    📝 {{ 'Register Complaint' if (lang or session.get('lang', 'en')) == 'en' else 'புகார் பதிவு' }}
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('complaint_tracking') }}">
+                    🔍 {{ 'Track Status' if (lang or session.get('lang', 'en')) == 'en' else 'நிலை சரிபார்' }}
+                </a>
+            </li>
+            <li>
+                <a href="javascript:void(0)" onclick="toggleChatWindow()">
+                    🤖 {{ 'AI Assistant' if (lang or session.get('lang', 'en')) == 'en' else 'AI வழிகாட்டி' }}
+                </a>
+            </li>
+        </ul>
+
+        <div class="sidebar-bottom">
+            <a href="{{ url_for('logout') }}" class="sidebar-logout">
+                🚪 {{ 'Logout' if (lang or session.get('lang', 'en')) == 'en' else 'வெளியேறு' }}
+            </a>
+        </div>
+    </aside>
+    {% endif %}
+
+    <!-- MAIN WRAPPER -->
+    <div class="main-wrapper {% if request.endpoint != 'dashboard' or not session.get('username') %}no-sidebar{% endif %}">
+        <!-- TOP NAVBAR -->
+        <header class="top-navbar">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                {% if request.endpoint not in ['home', 'dashboard', 'login', 'register', None] and session.get('username') %}
+                    <a href="{{ url_for('dashboard') }}" style="color: #ffffff; text-decoration: none; font-size: 13px; background: rgba(255,255,255,0.18); padding: 6px 14px; border-radius: 4px; font-weight: 600; display: flex; align-items: center; gap: 5px;">
+                        ← {{ 'Back to Dashboard' if (lang or session.get('lang', 'en')) == 'en' else 'முகப்பிற்கு செல்க' }}
+                    </a>
+                {% endif %}
+                <a href="{{ url_for('home') }}" class="portal-brand-link">
+                    🏛️ {{ 'Chatbot Enabled Smart Village Service Portal' if (lang or session.get('lang', 'en')) == 'en' else 'செயல்படுத்தப்பட்ட கிராம சேவை தளம்' }}
+                </a>
+            </div>
+            
+            <div class="lang-switch">
+                <a href="{{ url_for('set_language', lang_code='en') }}" class="{{ 'active' if (lang or session.get('lang', 'en')) == 'en' else '' }}">English</a> | 
+                <a href="{{ url_for('set_language', lang_code='ta') }}" class="{{ 'active' if (lang or session.get('lang', 'en')) == 'ta' else '' }}">தமிழ்</a>
+            </div>
+        </header>
+
+        <!-- FLASH MESSAGES & PAGE CONTENT -->
+        <main class="page-content">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div style="padding: 12px 16px; margin-bottom: 20px; border-radius: 6px; background-color: {% if category == 'success' %}#d4edda; color: #155724; border: 1px solid #c3e6cb;{% else %}#f8d7da; color: #721c24; border: 1px solid #f5c6cb;{% endif %} font-weight: 500;">
+                      {{ message }}
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+
+            {% block content %}{% endblock %}
+        </main>
+
+        <footer class="gov-footer">
+            &copy; 2026 Smart Village Service Portal | {{ 'E-Governance Initiative' if (lang or session.get('lang', 'en')) == 'en' else 'மின் ஆளுமை முன்முயற்சி' }}
+        </footer>
+    </div>
+
+    <!-- GLOBAL FLOATING AI VOICE CHATBOT WIDGET -->
+    <div id="chatbot-container" style="position: fixed; bottom: 30px; right: 30px; z-index: 99999999 !important;">
+        <button id="chatbot-toggle-btn" type="button" onclick="toggleChatWindow()" style="background-color: #0b5345; color: #ffffff; border: none; border-radius: 50%; width: 62px; height: 62px; font-size: 26px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; outline: none;">
+            💬
+        </button>
+
+        <div id="chatbot-box" style="display: none; position: absolute; bottom: 75px; right: 0; width: 370px; height: 500px; background: #ffffff; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.25); overflow: hidden; flex-direction: column; border: 1px solid #dcdcdc; z-index: 999999999 !important;">
+            <!-- Header -->
+            <div style="background-color: #0b5345; color: #ffffff; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <span style="font-weight: bold; font-size: 14px;">
+                        {{ 'Smart Village AI Guide' if (lang or session.get('lang', 'en')) == 'en' else 'கிராம AI வழிகாட்டி' }}
+                    </span>
+                    <span style="font-size: 10px; background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px; margin-left: 6px;">
+                        {{ 'English' if (lang or session.get('lang', 'en')) == 'en' else 'தமிழ்' }}
+                    </span>
+                </div>
+                <button type="button" onclick="closeChatWindow()" style="background: none; border: none; color: #ffffff; font-size: 24px; cursor: pointer; line-height: 1;">&times;</button>
+            </div>
+
+            <!-- Messages Log -->
+            <div id="chat-messages" style="flex: 1; padding: 14px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; font-size: 13px; background: #f8faf8;">
+                <div class="bot-msg-content" style="align-self: flex-start; background: #e8f5e9; color: #1b5e20; padding: 8px 12px; border-radius: 8px; max-width: 85%; line-height: 1.4;">
+                    {{ 'Hello! Click the microphone to speak, or type your query below.' if (lang or session.get('lang', 'en')) == 'en' else 'வணக்கம்! மைக்ரோஃபோனை கிளிக் செய்து பேசலாம், அல்லது தட்டச்சு செய்யலாம்.' }}
+                </div>
+            </div>
+
+            <!-- Speech Recognition Status Indicator -->
+            <div id="listening-status" style="display: none; background: #ffebee; color: #c62828; font-size: 11px; text-align: center; padding: 5px; font-weight: bold;">
+                {{ '🔴 Listening... Speak now' if (lang or session.get('lang', 'en')) == 'en' else '🔴 கேட்கிறது... பேசுங்கள்...' }}
+            </div>
+
+            <!-- Input Bar -->
+            <div style="display: flex; border-top: 1px solid #e0e0e0; padding: 8px; background: #ffffff; gap: 6px; align-items: center;">
+                <button id="voice-mic-btn" type="button" onclick="toggleSpeech()" title="Speak" style="background: #e0f2f1; color: #00796b; border: 1px solid #b2dfdb; border-radius: 50%; width: 36px; height: 36px; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                    🎙️
+                </button>
+                <input type="text" id="chat-input" onkeydown="checkEnterKey(event)" placeholder="{{ 'Type or speak query...' if (lang or session.get('lang', 'en')) == 'en' else 'கேள்வியை தட்டச்சு செய்யவும்...' }}" style="flex: 1; border: 1px solid #ccc; padding: 8px 10px; border-radius: 6px; outline: none; font-size: 13px;">
+                <button type="button" onclick="handleSend()" style="background: #0b5345; color: #ffffff; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 13px;">
+                    {{ 'Send' if (lang or session.get('lang', 'en')) == 'en' else 'அனுப்புக' }}
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- GLOBAL CLIENT-SIDE SCRIPT -->
+    <script>
+    function toggleChatWindow() {
+        const chatBox = document.getElementById('chatbot-box');
+        if (!chatBox) return;
+        const isHidden = (window.getComputedStyle(chatBox).display === 'none');
+        chatBox.style.display = isHidden ? 'flex' : 'none';
+        if (isHidden) {
+            const input = document.getElementById('chat-input');
+            if (input) input.focus();
+        }
+    }
+
+    function closeChatWindow() {
+        const chatBox = document.getElementById('chatbot-box');
+        if (chatBox) chatBox.style.display = 'none';
+        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    }
+
+    function checkEnterKey(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            handleSend();
+        }
+    }
+
+    // 1. Speech Recognition Setup
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    let recognition = null;
+    let isListening = false;
+
+    if (SpeechRecognition) {
+        recognition = new SpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+
+        recognition.onstart = () => {
+            isListening = true;
+            const mic = document.getElementById('voice-mic-btn');
+            const status = document.getElementById('listening-status');
+            if (mic) mic.style.background = '#ffcdd2';
+            if (status) status.style.display = 'block';
+        };
+
+        recognition.onresult = (event) => {
+            const transcript = event.results[0][0].transcript;
+            const chatInput = document.getElementById('chat-input');
+            if (chatInput) chatInput.value = transcript;
+            handleSend();
+        };
+
+        recognition.onerror = () => resetListeningState();
+        recognition.onend = () => resetListeningState();
+    }
+
+    function resetListeningState() {
+        isListening = false;
+        const mic = document.getElementById('voice-mic-btn');
+        const status = document.getElementById('listening-status');
+        if (mic) mic.style.background = '#e0f2f1';
+        if (status) status.style.display = 'none';
+    }
+
+    function toggleSpeech() {
+        if (!recognition) return;
+        if (isListening) {
+            recognition.stop();
+        } else {
+            const isTamil = document.documentElement.lang === 'ta';
+            recognition.lang = isTamil ? 'ta-IN' : 'en-IN';
+            recognition.start();
+        }
+    }
+
+    // 2. Safe Text-To-Speech Clean Engine
+    function speakText(text) {
+        if (!('speechSynthesis' in window)) return;
+        window.speechSynthesis.cancel();
+
+        const stripRegex = new RegExp('[*#_`]', 'g');
+        const newlineRegex = new RegExp('\\n+', 'g');
+        const cleanText = text.replace(stripRegex, '').replace(newlineRegex, ' ');
+
+        const utterance = new SpeechSynthesisUtterance(cleanText);
+        const tamilRegex = new RegExp('[\\u0B80-\\u0BFF]');
+        utterance.lang = tamilRegex.test(cleanText) ? 'ta-IN' : 'en-IN';
+        utterance.rate = 0.95;
+        window.speechSynthesis.speak(utterance);
+    }
+
+    // 3. Send Message Handler
+    async function handleSend() {
+        const chatInput = document.getElementById('chat-input');
+        const chatMessages = document.getElementById('chat-messages');
+        if (!chatInput || !chatMessages) return;
+
+        const msg = chatInput.value.trim();
+        if (!msg) return;
+
+        appendMsg(msg, 'user');
+        chatInput.value = '';
+
+        const indicator = document.createElement('div');
+        indicator.id = 'chat-typing-indicator';
+        indicator.style.cssText = 'align-self: flex-start; background: #e8f5e9; color: #1b5e20; padding: 6px 10px; border-radius: 6px; font-style: italic; font-size: 11px;';
+        indicator.textContent = "{{ 'Typing...' if (lang or session.get('lang', 'en')) == 'en' else 'பதில் தயாராகிறது...' }}";
+        chatMessages.appendChild(indicator);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        try {
+            const res = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: msg })
+            });
+            const data = await res.json();
+            
+            const typingElem = document.getElementById('chat-typing-indicator');
+            if (typingElem) typingElem.remove();
+
+            const botReply = data.reply || "{{ 'No response received.' if (lang or session.get('lang', 'en')) == 'en' else 'பதில் எதுவும் பெறப்படவில்லை.' }}";
+            appendMsg(botReply, 'bot');
+            speakText(botReply);
+        } catch (err) {
+            const typingElem = document.getElementById('chat-typing-indicator');
+            if (typingElem) typingElem.remove();
+            appendMsg("{{ 'Unable to connect to server.' if (lang or session.get('lang', 'en')) == 'en' else 'சேவையகத்தை இணைக்க முடியவில்லை.' }}", 'bot');
+        }
+    }
+
+    function appendMsg(text, sender) {
+        const chatMessages = document.getElementById('chat-messages');
+        if (!chatMessages) return;
+
+        const div = document.createElement('div');
+        if (sender === 'user') {
+            div.style.cssText = 'align-self: flex-end; background: #0b5345; color: #ffffff; padding: 8px 12px; border-radius: 8px; max-width: 85%; word-break: break-word;';
+            div.textContent = text;
+        } else {
+            div.className = 'bot-msg-content';
+            div.style.cssText = 'align-self: flex-start; background: #e8f5e9; color: #1b5e20; padding: 8px 12px; border-radius: 8px; max-width: 85%; word-break: break-word;';
+
+            const span = document.createElement('div');
+            span.innerHTML = (typeof marked !== 'undefined' && typeof marked.parse === 'function') ? marked.parse(text) : text;
+            div.appendChild(span);
+
+            const audioBtn = document.createElement('button');
+            audioBtn.type = 'button';
+            audioBtn.innerHTML = '🔊';
+            audioBtn.title = "{{ 'Replay Voice' if (lang or session.get('lang', 'en')) == 'en' else 'மீண்டும் கேட்க' }}";
+            audioBtn.style.cssText = 'background: none; border: none; cursor: pointer; font-size: 13px; margin-top: 5px; display: inline-block; padding: 0;';
+            audioBtn.onclick = () => speakText(text);
+            div.appendChild(audioBtn);
+        }
+        chatMessages.appendChild(div);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+    </script>
+</body>
+</html>

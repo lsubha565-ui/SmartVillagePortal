@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="form-card" style="max-width: 650px; margin: 30px auto; background: #ffffff; padding: 25px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border-top: 4px solid #0b5345;">
+    <h2 style="color: #0b5345; margin-bottom: 20px; text-align: center;">
+        {{ 'Track Grievance Status' if (lang or session.get('lang', 'en')) == 'en' else 'புகார் நிலையை அறிய' }}
+    </h2>
+
+    <form action="{{ url_for('complaint_tracking') }}" method="POST">
+        <div class="form-group" style="margin-bottom: 16px;">
+            <label style="display: block; font-weight: 600; margin-bottom: 6px;">
+                {{ 'Enter Complaint ID' if (lang or session.get('lang', 'en')) == 'en' else 'புகார் எண்ணை உள்ளிடவும்' }}
+            </label>
+            <input type="text" name="complaint_id" placeholder="e.g. CMP1001" required value="{{ complaint_id if complaint_id else '' }}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; outline: none;">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 11px; background-color: #0b5345; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">
+            {{ 'Track Status' if (lang or session.get('lang', 'en')) == 'en' else 'நிலையைக் காண்க' }}
+        </button>
+    </form>
+
+    {% if complaint %}
+    <div class="tracking-result" style="margin-top: 25px; padding: 20px; border-radius: 6px; background-color: #f8f9fa; border: 1px solid #dcdcdc;">
+        <h3 style="color: #0b5345; margin-bottom: 15px; font-size: 18px;">
+            {{ 'Complaint Status Details' if (lang or session.get('lang', 'en')) == 'en' else 'புகார் விவரங்கள்' }}
+        </h3>
+        
+        <p style="margin-bottom: 8px;"><strong>{{ 'Complaint ID' if (lang or session.get('lang', 'en')) == 'en' else 'புகார் எண்' }}:</strong> {{ complaint.complaint_id }}</p>
+        <p style="margin-bottom: 8px;"><strong>{{ 'Applicant Name' if (lang or session.get('lang', 'en')) == 'en' else 'மனுதாரர் பெயர்' }}:</strong> {{ complaint.applicant_name }}</p>
+        <p style="margin-bottom: 8px;"><strong>{{ 'Jurisdiction' if (lang or session.get('lang', 'en')) == 'en' else 'இருப்பிடம்' }}:</strong> {{ complaint.panchayat }}, {{ complaint.taluk_block }}, {{ complaint.district }}</p>
+        <p style="margin-bottom: 8px;"><strong>{{ 'Category' if (lang or session.get('lang', 'en')) == 'en' else 'வகை' }}:</strong> {{ complaint.category }}</p>
+        <p style="margin-bottom: 8px;"><strong>{{ 'Subject' if (lang or session.get('lang', 'en')) == 'en' else 'தலைப்பு' }}:</strong> {{ complaint.title }}</p>
+        <p style="margin-bottom: 8px;"><strong>{{ 'Location' if (lang or session.get('lang', 'en')) == 'en' else 'சம்பவ இடம்' }}:</strong> {{ complaint.location }}</p>
+        <p style="margin-bottom: 8px;"><strong>{{ 'Description' if (lang or session.get('lang', 'en')) == 'en' else 'விவரம்' }}:</strong> {{ complaint.description }}</p>
+        
+        <p style="margin-top: 12px;">
+            <strong>{{ 'Status' if (lang or session.get('lang', 'en')) == 'en' else 'தற்போதைய நிலை' }}:</strong>
+            <span style="padding: 4px 10px; font-weight: bold; border-radius: 4px; background-color: {% if complaint.status == 'Resolved' %}#d4edda; color: #155724;{% elif complaint.status == 'In Progress' %}#fff3cd; color: #856404;{% else %}#f8d7da; color: #721c24;{% endif %}">
+                {% if (lang or session.get('lang', 'en')) == 'ta' %}
+                    {% if complaint.status == 'Resolved' %}தீர்க்கப்பட்டது{% elif complaint.status == 'In Progress' %}செயல்பாட்டில் உள்ளது{% else %}நிலுவையில் உள்ளது{% endif %}
+                {% else %}
+                    {{ complaint.status }}
+                {% endif %}
+            </span>
+        </p>
+
+        {% if complaint.document_path %}
+        <p style="margin-top: 12px;">
+            <strong>{{ 'Attached Document' if (lang or session.get('lang', 'en')) == 'en' else 'இணைக்கப்பட்ட ஆவணம்' }}:</strong>
+            <a href="{{ url_for('static', filename='uploads/' + complaint.document_path) }}" target="_blank" style="color: #0b5345; text-decoration: underline; font-weight: 600;">
+                {{ 'View Uploaded Document' if (lang or session.get('lang', 'en')) == 'en' else 'ஆவணத்தைக் காண்க' }}
+            </a>
+        </p>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

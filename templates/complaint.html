@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="form-card" style="max-width: 750px; margin: 30px auto; background: #ffffff; padding: 25px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border-top: 4px solid #0b5345;">
+    <h2 style="color: #0b5345; margin-bottom: 20px; text-align: center;">
+        {{ 'Register Village Grievance / Complaint' if (lang or session.get('lang', 'en')) == 'en' else 'கிராம பொது குறை / புகார் பதிவு செய்தல்' }}
+    </h2>
+
+    <form action="{{ url_for('complaint') }}" method="POST" enctype="multipart/form-data">
+        
+        <!-- SECTION 1: CITIZEN CONTACT DETAILS -->
+        <fieldset style="border: 1px solid #c8e6c9; border-radius: 6px; padding: 15px; margin-bottom: 20px;">
+            <legend style="color: #0b5345; font-weight: bold; padding: 0 10px;">
+                1. {{ 'Applicant Information' if (lang or session.get('lang', 'en')) == 'en' else 'மனுதாரர் விவரங்கள்' }}
+            </legend>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div class="form-group">
+                    <label style="display: block; font-weight: 600; margin-bottom: 6px;">
+                        {{ 'Applicant Name' if (lang or session.get('lang', 'en')) == 'en' else 'விண்ணப்பதாரர் பெயர்' }} *
+                    </label>
+                    <input type="text" name="applicant_name" required placeholder="{{ 'Full Name' if (lang or session.get('lang', 'en')) == 'en' else 'முழு பெயர்' }}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; outline: none;">
+                </div>
+
+                <div class="form-group">
+                    <label style="display: block; font-weight: 600; margin-bottom: 6px;">
+                        {{ 'Mobile Number' if (lang or session.get('lang', 'en')) == 'en' else 'கைபேசி எண்' }} *
+                    </label>
+                    <input type="tel" name="mobile" required placeholder="{{ '10-digit mobile' if (lang or session.get('lang', 'en')) == 'en' else '10 இலக்க கைபேசி எண்' }}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; outline: none;">
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- SECTION 2: JURISDICTION & LOCATION -->
+        <fieldset style="border: 1px solid #c8e6c9; border-radius: 6px; padding: 15px; margin-bottom: 20px;">
+            <legend style="color: #0b5345; font-weight: bold; padding: 0 10px;">
+                2. {{ 'Village Jurisdiction' if (lang or session.get('lang', 'en')) == 'en' else 'கிராம நிர்வாக எல்லை' }}
+            </legend>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
+                <div class="form-group">
+                    <label style="display: block; font-weight: 600; margin-bottom: 6px;">
+                        {{ 'District' if (lang or session.get('lang', 'en')) == 'en' else 'மாவட்டம்' }} *
+                    </label>
+                    <input type="text" name="district" required placeholder="{{ 'District' if (lang or session.get('lang', 'en')) == 'en' else 'மாவட்டம்' }}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; outline: none;">
+                </div>
+
+                <div class="form-group">
+                    <label style="display: block; font-weight: 600; margin-bottom: 6px;">
+                        {{ 'Taluk / Block' if (lang or session.get('lang', 'en')) == 'en' else 'வட்டம் / ஒன்றியம்' }} *
+                    </label>
+                    <input type="text" name="taluk_block" required placeholder="{{ 'Taluk' if (lang or session.get('lang', 'en')) == 'en' else 'வட்டம்' }}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; outline: none;">
+                </div>
+
+                <div class="form-group">
+                    <label style="display: block; font-weight: 600; margin-bottom: 6px;">
+                        {{ 'Village Panchayat' if (lang or session.get('lang', 'en')) == 'en' else 'கிராம ஊராட்சி' }} *
+                    </label>
+                    <input type="text" name="panchayat" required placeholder="{{ 'Panchayat Name' if (lang or session.get('lang', 'en')) == 'en' else 'ஊராட்சி பெயர்' }}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; outline: none;">
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- SECTION 3: COMPLAINT DETAILS -->
+        <fieldset style="border: 1px solid #c8e6c9; border-radius: 6px; padding: 15px; margin-bottom: 20px;">
+            <legend style="color: #0b5345; font-weight: bold; padding: 0 10px;">
+                3. {{ 'Grievance Specifics' if (lang or session.get('lang', 'en')) == 'en' else 'குறைபாட்டின் விவரங்கள்' }}
+            </legend>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div class="form-group">
+                    <label style="display: block; font-weight: 600; margin-bottom: 6px;">
+                        {{ 'Grievance Category' if (lang or session.get('lang', 'en')) == 'en' else 'புகார் வகை' }} *
+                    </label>
+                    <select name="category" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; outline: none;">
+                        <option value="">{{ '-- Select Category --' if (lang or session.get('lang', 'en')) == 'en' else '-- வகையைத் தேர்ந்தெடுக்கவும் --' }}</option>
+                        <option value="Drinking Water">{{ 'Drinking Water Supply' if (lang or session.get('lang', 'en')) == 'en' else 'குடிநீர் விநியோகம்' }}</option>
+                        <option value="Street Light">{{ 'Street Light Maintenance' if (lang or session.get('lang', 'en')) == 'en' else 'தெரு விளக்கு பராமரிப்பு' }}</option>
+                        <option value="Road Damage">{{ 'Damaged Road / Potholes' if (lang or session.get('lang', 'en')) == 'en' else 'சாலை பழுது மற்றும் குழிகள்' }}</option>
+                        <option value="Sanitation & Drainage">{{ 'Sanitation & Drainage Cleaning' if (lang or session.get('lang', 'en')) == 'en' else 'சாக்கடை மற்றும் சுகாதார சீர்கேடு' }}</option>
+                        <option value="Garbage Disposal">{{ 'Garbage / Waste Collection' if (lang or session.get('lang', 'en')) == 'en' else 'குப்பை சேகரிப்பு' }}</option>
+                        <option value="Other Issues">{{ 'Other Panchayat Services' if (lang or session.get('lang', 'en')) == 'en' else 'மற்ற கிராம நிர்வாக பிரச்சினைகள்' }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label style="display: block; font-weight: 600; margin-bottom: 6px;">
+                        {{ 'Specific Location / Landmark' if (lang or session.get('lang', 'en')) == 'en' else 'சம்பவ இடம் / அடையாளம்' }} *
+                    </label>
+                    <input type="text" name="location" required placeholder="{{ 'e.g. Near North Street Primary School' if (lang or session.get('lang', 'en')) == 'en' else 'எ.கா. வடக்கு தெரு பள்ளி அருகில்' }}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; outline: none;">
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top: 15px;">
+                <label style="display: block; font-weight: 600; margin-bottom: 6px;">
+                    {{ 'Grievance Title / Subject' if (lang or session.get('lang', 'en')) == 'en' else 'புகாரின் தலைப்பு' }} *
+                </label>
+                <input type="text" name="title" required placeholder="{{ 'Short summary of the issue' if (lang or session.get('lang', 'en')) == 'en' else 'பிரச்சினையின் சுருக்கமான தலைப்பு' }}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; outline: none;">
+            </div>
+
+            <div class="form-group" style="margin-top: 15px;">
+                <label style="display: block; font-weight: 600; margin-bottom: 6px;">
+                    {{ 'Detailed Description' if (lang or session.get('lang', 'en')) == 'en' else 'விரிவான விளக்கம்' }} *
+                </label>
+                <textarea name="description" rows="4" required placeholder="{{ 'Describe the problem clearly (duration, impact, etc.)' if (lang or session.get('lang', 'en')) == 'en' else 'பிரச்சினையை விரிவாக விளக்கவும்...' }}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; outline: none;"></textarea>
+            </div>
+
+            <div class="form-group" style="margin-top: 15px;">
+                <label style="display: block; font-weight: 600; margin-bottom: 6px;">
+                    {{ 'Upload Photo Proof (Optional)' if (lang or session.get('lang', 'en')) == 'en' else 'புகைப்பட ஆதாரம் பதிவேற்றம் (விருப்பப்பட்டால்)' }}
+                </label>
+                <input type="file" name="document" accept=".jpg,.jpeg,.png,.pdf" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px;">
+                <small style="color: #666; display: block; margin-top: 4px;">
+                    {{ 'Attach an image of damaged road, broken street light, etc. (Max: 5MB)' if (lang or session.get('lang', 'en')) == 'en' else 'பழுதுபட்ட சாலை அல்லது விளக்கு புகைப்படம் இணைக்கவும் (அதிகபட்சம்: 5MB)' }}
+                </small>
+            </div>
+        </fieldset>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 16px; background-color: #0b5345; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
+            {{ 'Submit Grievance' if (lang or session.get('lang', 'en')) == 'en' else 'புகாரை சமர்ப்பிக்கவும்' }}
+        </button>
+    </form>
+</div>
+{% endblock %}

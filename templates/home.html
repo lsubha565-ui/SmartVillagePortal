@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="max-width: 1100px; margin: 20px auto; padding: 0 15px;">
+    <!-- Hero Banner -->
+    <div style="background: linear-gradient(135deg, #0b5345 0%, #16a085 100%); color: #ffffff; padding: 60px 40px; border-radius: 12px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.1);">
+        <h1 style="font-size: 36px; font-weight: 800; margin-bottom: 15px; letter-spacing: 0.5px;">
+            {{ 'Welcome to Smart Village Service Portal' if (lang or session.get('lang', 'en')) == 'en' else 'கிராம சேவை இணையதளத்திற்கு நல்வரவு' }}
+        </h1>
+        <p style="font-size: 17px; max-width: 750px; margin: 0 auto 30px auto; line-height: 1.6; color: #e0f2f1;">
+            {{ 'A transparent digital e-governance platform to apply for official certificates, submit village grievances, and access AI-assisted civic support 24/7.' if (lang or session.get('lang', 'en')) == 'en' else 'அதிகாரப்பூர்வ சான்றிதழ்களுக்கு விண்ணப்பிக்கவும், கிராம பொது புகார்களை பதிவு செய்யவும், 24/7 AI வழிகாட்டியை பயன்படுத்தவும் உருவாக்கப்பட்ட மின் ஆளுமை தளம்.' }}
+        </p>
+        <div style="display: flex; justify-content: center; gap: 18px; flex-wrap: wrap;">
+            <a href="{{ url_for('login') }}" style="background: #ffffff; color: #0b5345; padding: 12px 32px; border-radius: 6px; font-weight: bold; text-decoration: none; font-size: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: transform 0.2s;">
+                🔐 {{ 'Citizen / Admin Login' if (lang or session.get('lang', 'en')) == 'en' else 'உள்நுழைவு' }}
+            </a>
+            <a href="{{ url_for('register') }}" style="background: #e67e22; color: #ffffff; padding: 12px 32px; border-radius: 6px; font-weight: bold; text-decoration: none; font-size: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: transform 0.2s;">
+                📝 {{ 'New Citizen Registration' if (lang or session.get('lang', 'en')) == 'en' else 'புதிய பதிவு' }}
+            </a>
+        </div>
+    </div>
+
+    <!-- Portal Key Features Section -->
+    <div style="margin-top: 50px;">
+        <h2 style="text-align: center; color: #0b5345; font-size: 24px; margin-bottom: 30px;">
+            {{ 'Our Core Services' if (lang or session.get('lang', 'en')) == 'en' else 'எங்கள் முக்கிய சேவைகள்' }}
+        </h2>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px;">
+            <!-- Service 1 -->
+            <div style="background: #ffffff; padding: 30px 20px; border-radius: 10px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border-top: 4px solid #27ae60;">
+                <div style="font-size: 40px; margin-bottom: 12px;">👶</div>
+                <h3 style="color: #0b5345; font-size: 17px; margin-bottom: 8px;">
+                    {{ 'Birth Registration' if (lang or session.get('lang', 'en')) == 'en' else 'பிறப்பு சான்றிதழ்' }}
+                </h3>
+                <p style="color: #666; font-size: 13px; line-height: 1.5;">
+                    {{ 'Submit birth certificate applications online and track status until digital copy approval.' if (lang or session.get('lang', 'en')) == 'en' else 'பிறப்பு சான்றிதழுக்கு இணையத்தில் விண்ணப்பித்து நகலை பதிவிறக்கம் செய்யவும்.' }}
+                </p>
+            </div>
+
+            <!-- Service 2 -->
+            <div style="background: #ffffff; padding: 30px 20px; border-radius: 10px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border-top: 4px solid #e67e22;">
+                <div style="font-size: 40px; margin-bottom: 12px;">📜</div>
+                <h3 style="color: #0b5345; font-size: 17px; margin-bottom: 8px;">
+                    {{ 'Death Registration' if (lang or session.get('lang', 'en')) == 'en' else 'இறப்பு சான்றிதழ்' }}
+                </h3>
+                <p style="color: #666; font-size: 13px; line-height: 1.5;">
+                    {{ 'Apply for legal death records with supporting proofs and monitor panchayat review.' if (lang or session.get('lang', 'en')) == 'en' else 'இறப்பு சான்றிதழுக்கான ஆவணங்களை சமர்ப்பித்து நிலையை அறியவும்.' }}
+                </p>
+            </div>
+
+            <!-- Service 3 -->
+            <div style="background: #ffffff; padding: 30px 20px; border-radius: 10px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border-top: 4px solid #2980b9;">
+                <div style="font-size: 40px; margin-bottom: 12px;">📝</div>
+                <h3 style="color: #0b5345; font-size: 17px; margin-bottom: 8px;">
+                    {{ 'Grievance Redressal' if (lang or session.get('lang', 'en')) == 'en' else 'பொது குறைதீர்ப்பு' }}
+                </h3>
+                <p style="color: #666; font-size: 13px; line-height: 1.5;">
+                    {{ 'Report sanitation, roads, streetlights, or drinking water issues directly to village officials.' if (lang or session.get('lang', 'en')) == 'en' else 'குடிநீர், சாலை, தெருவிளக்கு புகார்களை நேரடியாக ஊராட்சிக்கு தெரிவிக்கலாம்.' }}
+                </p>
+            </div>
+
+            <!-- Service 4 -->
+            <div style="background: #ffffff; padding: 30px 20px; border-radius: 10px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border-top: 4px solid #8e44ad;">
+                <div style="font-size: 40px; margin-bottom: 12px;">🤖</div>
+                <h3 style="color: #0b5345; font-size: 17px; margin-bottom: 8px;">
+                    {{ 'AI Voice Assistant' if (lang or session.get('lang', 'en')) == 'en' else 'AI குரல் வழிகாட்டி' }}
+                </h3>
+                <p style="color: #666; font-size: 13px; line-height: 1.5;">
+                    {{ 'Ask questions in English or Tamil using speech-to-text for guided village assistance.' if (lang or session.get('lang', 'en')) == 'en' else 'தமிழ் மற்றும் ஆங்கிலத்தில் குரல் வழியாக பேசி தகவல் வழிகாட்டல் பெறலாம்.' }}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

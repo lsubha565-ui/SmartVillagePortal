@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="form-card">
+    <h2>Admin Login / நிர்வாகி உள்நுழைவு</h2>
+
+    <form action="{{ url_for('admin_login') }}" method="POST">
+        <div class="form-group">
+            <label>Admin Username / நிர்வாகி பயனர் பெயர்</label>
+            <input type="text" name="username" required placeholder="admin">
+        </div>
+
+        <div class="form-group">
+            <label>Password / கடவுச்சொல்</label>
+            <input type="password" name="password" required placeholder="admin123">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Login as Admin</button>
+    </form>
+</div>
+{% endblock %}

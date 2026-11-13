@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="auth-card" style="max-width: 420px; margin: 40px auto; padding: 30px; background: #ffffff; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 5px solid #0b5345;">
+    <h2 style="text-align: center; color: #0b5345; margin-bottom: 20px;">
+        {{ 'Portal Login' if (lang or session.get('lang', 'en')) == 'en' else 'இணையதள உள்நுழைவு' }}
+    </h2>
+
+    <!-- Form with autocomplete fully disabled -->
+    <form action="{{ url_for('login') }}" method="POST" autocomplete="off">
+        
+        <!-- Hidden inputs to absorb browser autofill heuristics -->
+        <input style="display:none" type="text" name="fakeusernameremembered" tabindex="-1" autocomplete="off"/>
+        <input style="display:none" type="password" name="fakepasswordremembered" tabindex="-1" autocomplete="new-password"/>
+
+        <!-- Role Switcher (Citizen vs Admin) -->
+        <div style="display: flex; background: #e8f5e9; border-radius: 8px; padding: 4px; margin-bottom: 20px; border: 1px solid #c8e6c9;">
+            <div style="flex: 1; text-align: center;">
+                <input type="radio" name="role" id="role-citizen" value="citizen" checked style="display: none;">
+                <label for="role-citizen" id="label-citizen" style="display: block; padding: 8px 0; font-size: 13px; font-weight: bold; color: #ffffff; background: #0b5345; border-radius: 6px; cursor: pointer;">
+                    👤 {{ 'Citizen' if (lang or session.get('lang', 'en')) == 'en' else 'குடிமக்கள்' }}
+                </label>
+            </div>
+            <div style="flex: 1; text-align: center;">
+                <input type="radio" name="role" id="role-admin" value="admin" style="display: none;">
+                <label for="role-admin" id="label-admin" style="display: block; padding: 8px 0; font-size: 13px; font-weight: bold; color: #0b5345; background: transparent; border-radius: 6px; cursor: pointer;">
+                    🛡️ {{ 'Admin' if (lang or session.get('lang', 'en')) == 'en' else 'நிர்வாகி' }}
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 16px;">
+            <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px;">
+                {{ 'Username' if (lang or session.get('lang', 'en')) == 'en' else 'பயனர் பெயர்' }} *
+            </label>
+            <input 
+                type="text" 
+                name="username" 
+                id="username_field"
+                required 
+                autocomplete="off" 
+                autocorrect="off" 
+                autocapitalize="off" 
+                spellcheck="false"
+                data-lpignore="true"
+                data-form-type="other"
+                placeholder="{{ 'Enter username' if (lang or session.get('lang', 'en')) == 'en' else 'பயனர் பெயரை உள்ளிடவும்' }}" 
+                style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; outline: none;">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 20px;">
+            <label style="display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px;">
+                {{ 'Password' if (lang or session.get('lang', 'en')) == 'en' else 'கடவுச்சொல்' }} *
+            </label>
+            <input 
+                type="password" 
+                name="password" 
+                id="password_field"
+                required 
+                autocomplete="new-password"
+                data-lpignore="true"
+                data-form-type="other"
+                placeholder="{{ 'Enter password' if (lang or session.get('lang', 'en')) == 'en' else 'கடவுச்சொல்லை உள்ளிடவும்' }}" 
+                style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; outline: none;">
+        </div>
+
+        <button type="submit" id="submit-btn" class="btn btn-primary" style="width: 100%; padding: 11px; background: #0b5345; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 14px;">
+            {{ 'Login' if (lang or session.get('lang', 'en')) == 'en' else 'உள்நுழைவு' }}
+        </button>
+    </form>
+
+    <p class="auth-link" id="register-note" style="margin-top: 18px; text-align: center; font-size: 13px; color: #666;">
+        {{ "Don't have an account?" if (lang or session.get('lang', 'en')) == 'en' else 'கணக்கு இல்லையா?' }} 
+        <a href="{{ url_for('register') }}" style="color: #0b5345; font-weight: bold; text-decoration: none;">
+            {{ 'Register Here' if (lang or session.get('lang', 'en')) == 'en' else 'இங்கே பதிவு செய்யவும்' }}
+        </a>
+    </p>
+</div>
+
+<script>
+    const citizenRadio = document.getElementById('role-citizen');
+    const adminRadio = document.getElementById('role-admin');
+    const labelCitizen = document.getElementById('label-citizen');
+    const labelAdmin = document.getElementById('label-admin');
+    const regNote = document.getElementById('register-note');
+    const submitBtn = document.getElementById('submit-btn');
+    const userField = document.getElementById('username_field');
+    const passField = document.getElementById('password_field');
+
+    function updateTabs() {
+        userField.value = '';
+        passField.value = '';
+
+        if (adminRadio.checked) {
+            labelAdmin.style.background = '#0b5345';
+            labelAdmin.style.color = '#ffffff';
+            labelCitizen.style.background = 'transparent';
+            labelCitizen.style.color = '#0b5345';
+            regNote.style.display = 'none';
+            submitBtn.textContent = "{{ 'Sign In as Admin' if (lang or session.get('lang', 'en')) == 'en' else 'நிர்வாகியாக உள்நுழையவும்' }}";
+        } else {
+            labelCitizen.style.background = '#0b5345';
+            labelCitizen.style.color = '#ffffff';
+            labelAdmin.style.background = 'transparent';
+            labelAdmin.style.color = '#0b5345';
+            regNote.style.display = 'block';
+            submitBtn.textContent = "{{ 'Login' if (lang or session.get('lang', 'en')) == 'en' else 'உள்நுழைவு' }}";
+        }
+    }
+
+    citizenRadio.addEventListener('change', updateTabs);
+    adminRadio.addEventListener('change', updateTabs);
+</script>
+{% endblock %}

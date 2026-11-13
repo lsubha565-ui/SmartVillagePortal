@@ -1,0 +1,235 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="form-card" style="max-width: 850px; margin: 30px auto; background: #ffffff; padding: 25px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border-top: 4px solid #0b5345;">
+    <h2 style="color: #0b5345; margin-bottom: 20px; text-align: center;">
+        {{ 'Death Certificate Application' if (lang or session.get('lang', 'en')) == 'en' else 'இறப்பு சான்றிதழ் விண்ணப்பப் படிவம்' }}
+    </h2>
+
+    <form action="{{ url_for('death_certificate') }}" method="POST" enctype="multipart/form-data">
+        
+        <!-- SECTION 1: APPLICANT DETAILS -->
+        <fieldset style="border: 1px solid #c8e6c9; border-radius: 6px; padding: 15px; margin-bottom: 20px;">
+            <legend style="color: #0b5345; font-weight: bold; padding: 0 10px;">
+                1. {{ 'Applicant Details' if (lang or session.get('lang', 'en')) == 'en' else 'விண்ணப்பதாரர் விவரங்கள்' }}
+            </legend>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div class="form-group">
+                    <label>{{ 'Applicant Name' if (lang or session.get('lang', 'en')) == 'en' else 'விண்ணப்பதாரர் பெயர்' }} *</label>
+                    <input type="text" name="applicant_name" required placeholder="{{ 'Full Name' if (lang or session.get('lang', 'en')) == 'en' else 'முழு பெயர்' }}">
+                </div>
+
+                <div class="form-group">
+                    <label>{{ 'Relationship with Deceased' if (lang or session.get('lang', 'en')) == 'en' else 'மறைந்தவருடனான உறவு முறை' }} *</label>
+                    <select name="relation_with_deceased" required>
+                        <option value="">{{ '-- Select Relation --' if (lang or session.get('lang', 'en')) == 'en' else '-- உறவைத் தேர்ந்தெடுக்கவும் --' }}</option>
+                        <option value="Son/Daughter">{{ 'Son / Daughter' if (lang or session.get('lang', 'en')) == 'en' else 'மகன் / மகள்' }}</option>
+                        <option value="Spouse">{{ 'Spouse' if (lang or session.get('lang', 'en')) == 'en' else 'கணவர் / மனைவி' }}</option>
+                        <option value="Parent">{{ 'Parent' if (lang or session.get('lang', 'en')) == 'en' else 'தந்தை / தாய்' }}</option>
+                        <option value="Brother/Sister">{{ 'Brother / Sister' if (lang or session.get('lang', 'en')) == 'en' else 'சகோதரர் / சகோதரி' }}</option>
+                        <option value="Other">{{ 'Other Relative' if (lang or session.get('lang', 'en')) == 'en' else 'மற்ற உறவினர்' }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px;">
+                <div class="form-group">
+                    <label>{{ 'Mobile Number' if (lang or session.get('lang', 'en')) == 'en' else 'கைபேசி எண்' }} *</label>
+                    <input type="tel" name="mobile" required placeholder="{{ '10-digit mobile' if (lang or session.get('lang', 'en')) == 'en' else '10 இலக்க எண்' }}">
+                </div>
+
+                <div class="form-group">
+                    <label>{{ 'Email Address' if (lang or session.get('lang', 'en')) == 'en' else 'மின்னஞ்சல் முகவரி' }} *</label>
+                    <input type="email" name="email" required placeholder="{{ 'Enter email' if (lang or session.get('lang', 'en')) == 'en' else 'மின்னஞ்சல்' }}">
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top: 10px;">
+                <label>{{ 'Applicant ID / Proof Number' if (lang or session.get('lang', 'en')) == 'en' else 'விண்ணப்பதாரர் அடையாள அட்டை எண்' }} *</label>
+                <input type="text" name="applicant_id_proof" required placeholder="{{ 'Govt ID / Voter ID Number' if (lang or session.get('lang', 'en')) == 'en' else 'அரசு அடையாள அட்டை எண்' }}">
+            </div>
+        </fieldset>
+
+        <!-- SECTION 2: DECEASED PERSON DETAILS -->
+        <fieldset style="border: 1px solid #c8e6c9; border-radius: 6px; padding: 15px; margin-bottom: 20px;">
+            <legend style="color: #0b5345; font-weight: bold; padding: 0 10px;">
+                2. {{ 'Deceased Person Details' if (lang or session.get('lang', 'en')) == 'en' else 'மறைந்த நபர் விவரங்கள்' }}
+            </legend>
+
+            <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 15px;">
+                <div class="form-group">
+                    <label>{{ "Deceased Person's Full Name" if (lang or session.get('lang', 'en')) == 'en' else 'மறைந்த நபரின் முழு பெயர்' }} *</label>
+                    <input type="text" name="deceased_name" required placeholder="{{ 'Name' if (lang or session.get('lang', 'en')) == 'en' else 'பெயர்' }}">
+                </div>
+
+                <div class="form-group">
+                    <label>{{ 'Gender' if (lang or session.get('lang', 'en')) == 'en' else 'பாலினம்' }} *</label>
+                    <select name="gender" required>
+                        <option value="">{{ '-- Select --' if (lang or session.get('lang', 'en')) == 'en' else '-- தேர்வு --' }}</option>
+                        <option value="Male">{{ 'Male' if (lang or session.get('lang', 'en')) == 'en' else 'ஆண்' }}</option>
+                        <option value="Female">{{ 'Female' if (lang or session.get('lang', 'en')) == 'en' else 'பெண்' }}</option>
+                        <option value="Other">{{ 'Other' if (lang or session.get('lang', 'en')) == 'en' else 'மற்றவை' }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>{{ 'Age at Death' if (lang or session.get('lang', 'en')) == 'en' else 'இறந்தபோது வயது' }} *</label>
+                    <input type="number" name="age" required placeholder="{{ 'Age' if (lang or session.get('lang', 'en')) == 'en' else 'வயது' }}">
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-top: 10px;">
+                <div class="form-group">
+                    <label>{{ 'Date of Death' if (lang or session.get('lang', 'en')) == 'en' else 'இறந்த தேதி' }} *</label>
+                    <input type="date" name="dod" required>
+                </div>
+
+                <div class="form-group">
+                    <label>{{ 'Time of Death (Optional)' if (lang or session.get('lang', 'en')) == 'en' else 'இறந்த நேரம் (விருப்பப்பட்டால்)' }}</label>
+                    <input type="time" name="death_time">
+                </div>
+
+                <div class="form-group">
+                    <label>{{ 'Marital Status' if (lang or session.get('lang', 'en')) == 'en' else 'திருமண நிலை' }} *</label>
+                    <select name="marital_status" required>
+                        <option value="Married">{{ 'Married' if (lang or session.get('lang', 'en')) == 'en' else 'திருமணமானவர்' }}</option>
+                        <option value="Unmarried">{{ 'Unmarried' if (lang or session.get('lang', 'en')) == 'en' else 'திருமணமாகாதவர்' }}</option>
+                        <option value="Widowed">{{ 'Widowed' if (lang or session.get('lang', 'en')) == 'en' else 'விதவை / விதவர்' }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px;">
+                <div class="form-group">
+                    <label>{{ "Father's / Husband's Name" if (lang or session.get('lang', 'en')) == 'en' else 'தந்தை / கணவர் பெயர்' }} *</label>
+                    <input type="text" name="relation_person_name" required placeholder="{{ 'Name' if (lang or session.get('lang', 'en')) == 'en' else 'பெயர்' }}">
+                </div>
+
+                <div class="form-group">
+                    <label>{{ "Mother's Full Name" if (lang or session.get('lang', 'en')) == 'en' else 'தாயின் பெயர்' }} *</label>
+                    <input type="text" name="mother_name" required placeholder="{{ 'Mother Name' if (lang or session.get('lang', 'en')) == 'en' else 'தாயின் பெயர்' }}">
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- SECTION 3: DEATH & ADDRESS DETAILS -->
+        <fieldset style="border: 1px solid #c8e6c9; border-radius: 6px; padding: 15px; margin-bottom: 20px;">
+            <legend style="color: #0b5345; font-weight: bold; padding: 0 10px;">
+                3. {{ 'Death & Address Details' if (lang or session.get('lang', 'en')) == 'en' else 'இறப்பு மற்றும் முகவரி விவரங்கள்' }}
+            </legend>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div class="form-group">
+                    <label>{{ 'Place of Death' if (lang or session.get('lang', 'en')) == 'en' else 'இறந்த இடம்' }} *</label>
+                    <select name="place_of_death" required>
+                        <option value="Hospital">{{ 'Hospital' if (lang or session.get('lang', 'en')) == 'en' else 'மருத்துவமனை' }}</option>
+                        <option value="Home">{{ 'Home' if (lang or session.get('lang', 'en')) == 'en' else 'வீடு' }}</option>
+                        <option value="Other">{{ 'Other' if (lang or session.get('lang', 'en')) == 'en' else 'மற்றவை' }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>{{ 'Hospital / Institution Name (if applicable)' if (lang or session.get('lang', 'en')) == 'en' else 'மருத்துவமனை பெயர்' }}</label>
+                    <input type="text" name="hospital_name" placeholder="{{ 'e.g. Govt Hospital' if (lang or session.get('lang', 'en')) == 'en' else 'மருத்துவமனை பெயர்' }}">
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top: 10px;">
+                <label>{{ 'Cause / Type of Death' if (lang or session.get('lang', 'en')) == 'en' else 'இறப்பிற்கான காரணம்' }} *</label>
+                <input type="text" name="cause_of_death" required placeholder="{{ 'e.g. Natural, Cardiac Arrest, Illness' if (lang or session.get('lang', 'en')) == 'en' else 'இயற்கை மரணம் / நோய்' }}">
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px;">
+                <div class="form-group">
+                    <label>{{ 'Permanent Residential Address' if (lang or session.get('lang', 'en')) == 'en' else 'நிரந்தர முகவரி' }} *</label>
+                    <textarea name="permanent_address" rows="2" required placeholder="{{ 'Permanent Address' if (lang or session.get('lang', 'en')) == 'en' else 'நிரந்தர முகவரி' }}"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>{{ 'Address at the Time of Death' if (lang or session.get('lang', 'en')) == 'en' else 'இறந்த போது இருந்த முகவரி' }} *</label>
+                    <textarea name="death_address" rows="2" required placeholder="{{ 'Address at death' if (lang or session.get('lang', 'en')) == 'en' else 'இறந்த போது இருந்த முகவரி' }}"></textarea>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-top: 10px;">
+                <div class="form-group">
+                    <label>{{ 'Village / Town' if (lang or session.get('lang', 'en')) == 'en' else 'கிராமம் / நகரம்' }} *</label>
+                    <input type="text" name="village_town" required placeholder="{{ 'Village / Town' if (lang or session.get('lang', 'en')) == 'en' else 'கிராமம்' }}">
+                </div>
+
+                <div class="form-group">
+                    <label>{{ 'Taluk' if (lang or session.get('lang', 'en')) == 'en' else 'வட்டம்' }} *</label>
+                    <input type="text" name="taluk" required placeholder="{{ 'Taluk' if (lang or session.get('lang', 'en')) == 'en' else 'வட்டம்' }}">
+                </div>
+
+                <div class="form-group">
+                    <label>{{ 'District' if (lang or session.get('lang', 'en')) == 'en' else 'மாவட்டம்' }} *</label>
+                    <input type="text" name="district" required placeholder="{{ 'District' if (lang or session.get('lang', 'en')) == 'en' else 'மாவட்டம்' }}">
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px;">
+                <div class="form-group">
+                    <label>{{ 'State' if (lang or session.get('lang', 'en')) == 'en' else 'மாநிலம்' }} *</label>
+                    <input type="text" name="state" value="Tamil Nadu" required>
+                </div>
+
+                <div class="form-group">
+                    <label>{{ 'Pincode' if (lang or session.get('lang', 'en')) == 'en' else 'அஞ்சல் குறியீட்டு எண்' }} *</label>
+                    <input type="text" name="pincode" required placeholder="600001">
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- SECTION 4: DOCUMENTS & APPLICATION -->
+        <fieldset style="border: 1px solid #c8e6c9; border-radius: 6px; padding: 15px; margin-bottom: 20px;">
+            <legend style="color: #0b5345; font-weight: bold; padding: 0 10px;">
+                4. {{ 'Documents & Application Details' if (lang or session.get('lang', 'en')) == 'en' else 'ஆவணங்கள் மற்றும் விண்ணப்ப விவரங்கள்' }}
+            </legend>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div class="form-group">
+                    <label>{{ 'Upload Death / Hospital Report (PDF/JPG)' if (lang or session.get('lang', 'en')) == 'en' else 'மருத்துவமனை இறப்பு அறிக்கை' }}</label>
+                    <input type="file" name="hospital_report" accept=".pdf,.jpg,.jpeg,.png">
+                </div>
+
+                <div class="form-group">
+                    <label>{{ "Upload Deceased's ID Proof" if (lang or session.get('lang', 'en')) == 'en' else 'மறைந்த நபரின் அடையாள அட்டை' }}</label>
+                    <input type="file" name="deceased_id" accept=".pdf,.jpg,.jpeg,.png">
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top: 10px;">
+                <label>{{ "Upload Applicant's ID Proof" if (lang or session.get('lang', 'en')) == 'en' else 'விண்ணப்பதாரர் அடையாள அட்டை' }}</label>
+                <input type="file" name="applicant_id_doc" accept=".pdf,.jpg,.jpeg,.png">
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px;">
+                <div class="form-group">
+                    <label>{{ 'Registration No. (if already registered)' if (lang or session.get('lang', 'en')) == 'en' else 'பதிவு எண் (ஏற்கனவே பதிந்திருந்தால்)' }}</label>
+                    <input type="text" name="prev_reg_no" placeholder="{{ 'Optional' if (lang or session.get('lang', 'en')) == 'en' else 'விருப்பப்பட்டால்' }}">
+                </div>
+
+                <div class="form-group">
+                    <label>{{ 'Purpose of Certificate' if (lang or session.get('lang', 'en')) == 'en' else 'சான்றிதழ் தேவைக்கான காரணம்' }} *</label>
+                    <input type="text" name="purpose" required placeholder="{{ 'e.g. Legal heir, Bank claim, Insurance' if (lang or session.get('lang', 'en')) == 'en' else 'வாரிசுரிமை / காப்பீடு / வங்கி' }}">
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top: 10px;">
+                <label>{{ 'Certificate Delivery Method' if (lang or session.get('lang', 'en')) == 'en' else 'சான்றிதழ் பெறும் முறை' }} *</label>
+                <select name="delivery_method" required>
+                    <option value="Online Download">{{ 'Online Portal Download (PDF)' if (lang or session.get('lang', 'en')) == 'en' else 'இணைய வழி பதிவிறக்கம் (PDF)' }}</option>
+                    <option value="Panchayat Office Collection">{{ 'Direct Collection at Panchayat Office' if (lang or session.get('lang', 'en')) == 'en' else 'நேரடி வழங்கல் (பஞ்சாயத்து அலுவலகம்)' }}</option>
+                    <option value="Postal Delivery">{{ 'Postal Delivery' if (lang or session.get('lang', 'en')) == 'en' else 'அஞ்சல் வழி' }}</option>
+                </select>
+            </div>
+        </fieldset>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 16px; background-color: #0b5345; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
+            {{ 'Submit Death Certificate Request' if (lang or session.get('lang', 'en')) == 'en' else 'இறப்பு சான்றிதழ் விண்ணப்பத்தை சமர்ப்பிக்கவும்' }}
+        </button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,208 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="width: 95%; max-width: 1200px; margin: 30px auto;">
+    <!-- Dashboard Header & Logout -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+        <h2 style="color: #0b5345; margin: 0; font-size: 24px;">
+            {{ 'Admin Dashboard' if lang == 'en' else 'நிர்வாக கட்டுப்பாட்டு பலகை' }}
+        </h2>
+        <a href="{{ url_for('admin_logout') }}" style="background-color: #e63946; color: white; padding: 10px 22px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 14px;">
+            {{ 'Logout' if lang == 'en' else 'வெளியேறு' }}
+        </a>
+    </div>
+
+    <!-- 1. Village Grievances Table -->
+    <div style="background: white; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); padding: 25px; margin-bottom: 35px; border-top: 4px solid #0b5345;">
+        <h3 style="color: #0b5345; margin-bottom: 18px; font-size: 19px;">
+            {{ 'Village Complaints & Grievances' if lang == 'en' else 'கிராம பொதுமக்கள் புகார்கள்' }}
+        </h3>
+        
+        <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 14px;">
+                <thead>
+                    <tr style="background-color: #e8f5e9; border-bottom: 2px solid #c8e6c9;">
+                        <th style="padding: 12px 10px;">{{ 'ID' if lang == 'en' else 'புகார் எண்' }}</th>
+                        <th style="padding: 12px 10px;">{{ 'Category' if lang == 'en' else 'வகை' }}</th>
+                        <th style="padding: 12px 10px;">{{ 'Title & Location' if lang == 'en' else 'தலைப்பு & இடம்' }}</th>
+                        <th style="padding: 12px 10px;">{{ 'Contact' if lang == 'en' else 'தொடர்பு எண்' }}</th>
+                        <th style="padding: 12px 10px;">{{ 'Current Status' if lang == 'en' else 'தற்போதைய நிலை' }}</th>
+                        <th style="padding: 12px 10px;">{{ 'Action' if lang == 'en' else 'செயல்பாடு' }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in complaints %}
+                    <tr style="border-bottom: 1px solid #eee;">
+                        <td style="padding: 12px 10px;"><strong>{{ c.complaint_id }}</strong></td>
+                        <td style="padding: 12px 10px;">{{ c.category }}</td>
+                        <td style="padding: 12px 10px;">
+                            <strong>{{ c.title }}</strong><br>
+                            <small style="color: #666;">📍 {{ c.location }}</small>
+                        </td>
+                        <td style="padding: 12px 10px;">{{ c.mobile }}</td>
+                        <td style="padding: 12px 10px;">
+                            <span style="padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: bold; background: {% if c.status == 'Resolved' %}#d4edda; color: #155724;{% elif c.status == 'In Progress' %}#fff3cd; color: #856404;{% else %}#f8d7da; color: #721c24;{% endif %}">
+                                {% if lang == 'ta' %}
+                                    {% if c.status == 'Resolved' %}தீர்க்கப்பட்டது{% elif c.status == 'In Progress' %}செயல்பாட்டில் உள்ளது{% else %}நிலுவையில் உள்ளது{% endif %}
+                                {% else %}
+                                    {{ c.status }}
+                                {% endif %}
+                            </span>
+                        </td>
+                        <td style="padding: 12px 10px;">
+                            <form action="{{ url_for('update_complaint_status') }}" method="POST" style="display: flex; gap: 6px; align-items: center;">
+                                <input type="hidden" name="complaint_id" value="{{ c.complaint_id }}">
+                                <select name="status" style="padding: 5px; border-radius: 4px; border: 1px solid #ccc; font-size: 12px;">
+                                    <option value="Pending" {% if c.status == 'Pending' %}selected{% endif %}>{{ 'Pending' if lang == 'en' else 'நிலுவையில்' }}</option>
+                                    <option value="In Progress" {% if c.status == 'In Progress' %}selected{% endif %}>{{ 'In Progress' if lang == 'en' else 'செயல்பாட்டில்' }}</option>
+                                    <option value="Resolved" {% if c.status == 'Resolved' %}selected{% endif %}>{{ 'Resolved' if lang == 'en' else 'தீர்க்கப்பட்டது' }}</option>
+                                </select>
+                                <button type="submit" style="background: #0b5345; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold;">
+                                    {{ 'Update' if lang == 'en' else 'மாற்று' }}
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6" style="padding: 15px; text-align: center; color: #888;">
+                            {{ 'No complaints registered yet.' if lang == 'en' else 'புகார்கள் எதுவும் பதிவு செய்யப்படவில்லை.' }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 2. Birth Certificate Requests Table -->
+    <div style="background: white; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); padding: 25px; margin-bottom: 35px; border-top: 4px solid #27ae60;">
+        <h3 style="color: #0b5345; margin-bottom: 18px; font-size: 19px;">
+            {{ 'Birth Certificate Requests' if lang == 'en' else 'பிறப்பு சான்றிதழ் விண்ணப்பங்கள்' }}
+        </h3>
+        
+        <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 14px;">
+                <thead>
+                    <tr style="background-color: #e8f5e9; border-bottom: 2px solid #c8e6c9;">
+                        <th style="padding: 12px 10px;">{{ 'Request ID' if lang == 'en' else 'விண்ணப்ப எண்' }}</th>
+                        <th style="padding: 12px 10px;">{{ 'Child Name' if lang == 'en' else 'குழந்தையின் பெயர்' }}</th>
+                        <th style="padding: 12px 10px;">{{ 'Gender & DOB' if lang == 'en' else 'பாலினம் & பிறந்த தேதி' }}</th>
+                        <th style="padding: 12px 10px;">{{ 'Parents' if lang == 'en' else 'பெற்றோர் விவரம்' }}</th>
+                        <th style="padding: 12px 10px;">{{ 'Current Status' if lang == 'en' else 'தற்போதைய நிலை' }}</th>
+                        <th style="padding: 12px 10px;">{{ 'Action' if lang == 'en' else 'செயல்பாடு' }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for b in birth_requests %}
+                    <tr style="border-bottom: 1px solid #eee;">
+                        <td style="padding: 12px 10px;"><strong>{{ b.request_id }}</strong></td>
+                        <td style="padding: 12px 10px;">{{ b.child_name }}</td>
+                        <td style="padding: 12px 10px;">{{ b.gender }}<br><small style="color: #666;">{{ b.dob }}</small></td>
+                        <td style="padding: 12px 10px;">{{ b.father_name }} / {{ b.mother_name }}</td>
+                        <td style="padding: 12px 10px;">
+                            <span style="padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: bold; background: {% if b.status == 'Approved' %}#d4edda; color: #155724;{% elif b.status == 'Rejected' %}#f8d7da; color: #721c24;{% else %}#fff3cd; color: #856404;{% endif %}">
+                                {% if lang == 'ta' %}
+                                    {% if b.status == 'Approved' %}ஏற்றுக்கொள்ளப்பட்டது{% elif b.status == 'Rejected' %}நிராகரிக்கப்பட்டது{% else %}நிலுவையில் உள்ளது{% endif %}
+                                {% else %}
+                                    {{ b.status }}
+                                {% endif %}
+                            </span>
+                        </td>
+                        <td style="padding: 12px 10px;">
+                            <form action="{{ url_for('update_birth_status') }}" method="POST" style="display: flex; gap: 6px; align-items: center;">
+                                <input type="hidden" name="request_id" value="{{ b.request_id }}">
+                                <select name="status" style="padding: 5px; border-radius: 4px; border: 1px solid #ccc; font-size: 12px;">
+                                    <option value="Pending" {% if b.status == 'Pending' %}selected{% endif %}>{{ 'Pending' if lang == 'en' else 'நிலுவையில்' }}</option>
+                                    <option value="Approved" {% if b.status == 'Approved' %}selected{% endif %}>{{ 'Approved' if lang == 'en' else 'அங்கீகரிக்கப்பட்டது' }}</option>
+                                    <option value="Rejected" {% if b.status == 'Rejected' %}selected{% endif %}>{{ 'Rejected' if lang == 'en' else 'நிராகரிக்கப்பட்டது' }}</option>
+                                </select>
+                                <button type="submit" style="background: #0b5345; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold;">
+                                    {{ 'Update' if lang == 'en' else 'மாற்று' }}
+                                </button>
+                            </form>
+                            {% if b.status == 'Approved' %}
+                                <a href="{{ url_for('download_birth_certificate', request_id=b.request_id) }}" target="_blank" style="display: inline-block; padding: 4px 8px; background: #27ae60; color: white; text-decoration: none; border-radius: 4px; font-size: 11px; margin-top: 5px; font-weight: bold;">
+                                    {{ 'Download PDF' if lang == 'en' else 'சான்றிதழ் பதிவிறக்கம்' }}
+                                </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6" style="padding: 15px; text-align: center; color: #888;">
+                            {{ 'No birth certificate applications found.' if lang == 'en' else 'பிறப்பு சான்றிதழ் விண்ணப்பங்கள் எதுவும் இல்லை.' }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 3. Death Certificate Requests Table -->
+    <div style="background: white; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); padding: 25px; margin-bottom: 35px; border-top: 4px solid #e67e22;">
+        <h3 style="color: #0b5345; margin-bottom: 18px; font-size: 19px;">
+            {{ 'Death Certificate Requests' if lang == 'en' else 'இறப்பு சான்றிதழ் விண்ணப்பங்கள்' }}
+        </h3>
+        
+        <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 14px;">
+                <thead>
+                    <tr style="background-color: #e8f5e9; border-bottom: 2px solid #c8e6c9;">
+                        <th style="padding: 12px 10px;">{{ 'Request ID' if lang == 'en' else 'விண்ணப்ப எண்' }}</th>
+                        <th style="padding: 12px 10px;">{{ 'Deceased Name' if lang == 'en' else 'இறந்தவர் பெயர்' }}</th>
+                        <th style="padding: 12px 10px;">{{ 'Gender & DOD' if lang == 'en' else 'பாலினம் & இறந்த தேதி' }}</th>
+                        <th style="padding: 12px 10px;">{{ 'Applicant & Relation' if lang == 'en' else 'மனுதாரர் & உறவுமுறை' }}</th>
+                        <th style="padding: 12px 10px;">{{ 'Current Status' if lang == 'en' else 'தற்போதைய நிலை' }}</th>
+                        <th style="padding: 12px 10px;">{{ 'Action' if lang == 'en' else 'செயல்பாடு' }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for d in death_requests %}
+                    <tr style="border-bottom: 1px solid #eee;">
+                        <td style="padding: 12px 10px;"><strong>{{ d.request_id }}</strong></td>
+                        <td style="padding: 12px 10px;">{{ d.deceased_name }}</td>
+                        <td style="padding: 12px 10px;">{{ d.gender }} ({{ d.age }})<br><small style="color: #666;">{{ d.dod }}</small></td>
+                        <td style="padding: 12px 10px;">{{ d.applicant_name }} ({{ d.relation_with_deceased }})</td>
+                        <td style="padding: 12px 10px;">
+                            <span style="padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: bold; background: {% if d.status == 'Approved' %}#d4edda; color: #155724;{% elif d.status == 'Rejected' %}#f8d7da; color: #721c24;{% else %}#fff3cd; color: #856404;{% endif %}">
+                                {% if lang == 'ta' %}
+                                    {% if d.status == 'Approved' %}ஏற்றுக்கொள்ளப்பட்டது{% elif d.status == 'Rejected' %}நிராகரிக்கப்பட்டது{% else %}நிலுவையில் உள்ளது{% endif %}
+                                {% else %}
+                                    {{ d.status }}
+                                {% endif %}
+                            </span>
+                        </td>
+                        <td style="padding: 12px 10px;">
+                            <form action="{{ url_for('update_death_status') }}" method="POST" style="display: flex; gap: 6px; align-items: center;">
+                                <input type="hidden" name="request_id" value="{{ d.request_id }}">
+                                <select name="status" style="padding: 5px; border-radius: 4px; border: 1px solid #ccc; font-size: 12px;">
+                                    <option value="Pending" {% if d.status == 'Pending' %}selected{% endif %}>{{ 'Pending' if lang == 'en' else 'நிலுவையில்' }}</option>
+                                    <option value="Approved" {% if d.status == 'Approved' %}selected{% endif %}>{{ 'Approved' if lang == 'en' else 'அங்கீகரிக்கப்பட்டது' }}</option>
+                                    <option value="Rejected" {% if d.status == 'Rejected' %}selected{% endif %}>{{ 'Rejected' if lang == 'en' else 'நிராகரிக்கப்பட்டது' }}</option>
+                                </select>
+                                <button type="submit" style="background: #0b5345; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold;">
+                                    {{ 'Update' if lang == 'en' else 'மாற்று' }}
+                                </button>
+                            </form>
+                            {% if d.status == 'Approved' %}
+                                <a href="{{ url_for('download_death_certificate', request_id=d.request_id) }}" target="_blank" style="display: inline-block; padding: 4px 8px; background: #27ae60; color: white; text-decoration: none; border-radius: 4px; font-size: 11px; margin-top: 5px; font-weight: bold;">
+                                    {{ 'Download PDF' if lang == 'en' else 'சான்றிதழ் பதிவிறக்கம்' }}
+                                </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6" style="padding: 15px; text-align: center; color: #888;">
+                            {{ 'No death certificate applications found.' if lang == 'en' else 'இறப்பு சான்றிதழ் விண்ணப்பங்கள் எதுவும் இல்லை.' }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

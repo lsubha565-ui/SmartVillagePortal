@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="auth-card" style="max-width: 450px; margin: 40px auto; background: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border-top: 4px solid #0b5345;">
+    <h2 style="color: #0b5345; margin-bottom: 20px; text-align: center;">
+        {{ 'User Registration' if (lang or session.get('lang', 'en')) == 'en' else 'பயனர் பதிவு' }}
+    </h2>
+    
+    <!-- autocomplete="off" disables form-level autofill caching -->
+    <form action="{{ url_for('register') }}" method="POST" autocomplete="off">
+        <div class="form-group" style="margin-bottom: 16px;">
+            <label style="display: block; font-weight: 600; margin-bottom: 6px;">
+                {{ 'Username' if (lang or session.get('lang', 'en')) == 'en' else 'பயனர் பெயர்' }} *
+            </label>
+            <input type="text" name="username" required autocomplete="off" placeholder="{{ 'Enter username' if (lang or session.get('lang', 'en')) == 'en' else 'பயனர் பெயரை உள்ளிடவும்' }}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; outline: none;">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 16px;">
+            <label style="display: block; font-weight: 600; margin-bottom: 6px;">
+                {{ 'Email Address' if (lang or session.get('lang', 'en')) == 'en' else 'மின்னஞ்சல் முகவரி' }} *
+            </label>
+            <input type="email" name="email" required autocomplete="off" placeholder="{{ 'Enter email address' if (lang or session.get('lang', 'en')) == 'en' else 'மின்னஞ்சல் முகவரியை உள்ளிடவும்' }}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; outline: none;">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 20px;">
+            <label style="display: block; font-weight: 600; margin-bottom: 6px;">
+                {{ 'Password' if (lang or session.get('lang', 'en')) == 'en' else 'கடவுச்சொல்' }} *
+            </label>
+            <input type="password" name="password" required autocomplete="new-password" placeholder="{{ 'Enter password' if (lang or session.get('lang', 'en')) == 'en' else 'கடவுச்சொல்லை உள்ளிடவும்' }}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; outline: none;">
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 15px; background-color: #0b5345; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
+            {{ 'Register' if (lang or session.get('lang', 'en')) == 'en' else 'பதிவு செய்' }}
+        </button>
+    </form>
+
+    <p class="auth-link" style="text-align: center; margin-top: 18px; font-size: 14px; color: #555;">
+        {{ 'Already have an account?' if (lang or session.get('lang', 'en')) == 'en' else 'ஏற்கனவே கணக்கு உள்ளதா?' }} 
+        <a href="{{ url_for('login') }}" style="color: #0b5345; font-weight: bold; text-decoration: none;">
+            {{ 'Login Here' if (lang or session.get('lang', 'en')) == 'en' else 'இங்கே உள்நுழையவும்' }}
+        </a>
+    </p>
+</div>
+{% endblock %}
